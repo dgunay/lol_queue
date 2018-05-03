@@ -1,0 +1,13 @@
+{
+    "name": "devin/lol_queue",
+    "description": "A simulated LoL queue for educational purposes.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Devin Gunay",
+            "email": "devingunay@gmail.com"
+        }
+    ],
+    "require": {}
+}
