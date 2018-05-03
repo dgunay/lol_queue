@@ -9,5 +9,14 @@
             "email": "devingunay@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "7"
+    },
+    "autoload": {
+        "psr-4": {
+            "LOLQueue\\" : "src/",
+            "LOLQueue\\Test\\" : "test/"
+        }
+    }
 }
