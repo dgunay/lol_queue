@@ -7,7 +7,7 @@ use LQ\Team;
 use LQ\MatchCriterion;
 use LQ\TeamCriterion;
 use LQ\Criteria\TeamsWithinEloRange;
-use LQ\Criteria\PlayerWithinEloRange;
+use LQ\Criteria\PlayerWithinRangeOfAverageElo;
 use LQ\Criteria\NullMatchCriterion;
 use LQ\Criteria\NullTeamCriterion;
 
@@ -35,7 +35,7 @@ class QueueTest extends TestCase
 
 			$loops++;
 		}
-
+		
 		$this->assertEquals($unmatched_players, $q->numUnmatchedPlayers());
 		$this->assertEquals($unmatched_teams, $q->numUnmatchedTeams());
 	}
@@ -53,7 +53,7 @@ class QueueTest extends TestCase
 			'ten 1200 elo players, permissible elo ranges 100' => [
 				array_fill(0,10, new Player(1200)),
 				[new TeamsWithinEloRange(100)],
-				[new PlayerWithinEloRange(100)],
+				[new PlayerWithinRangeOfAverageElo(100)],
 				0, // unmatched players left in queue
 				0, // unmatched teams left in queue
 			],

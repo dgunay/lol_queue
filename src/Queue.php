@@ -53,30 +53,34 @@ class Queue
 		foreach ($this->players as $i => $player) {
 			// Put any player in to get the team started
 			if (empty($players)) {
-				$players[] = $player;
+				$players[$i] = $player;
 			}
 			else {
 				// Does this player fail any of the criteria to be included in the team?
+				$player_is_eligible = true;
 				foreach ($criteria as $criterion) {
 					if (!$criterion->canBeInTeam($player, ...$players)) {
-						continue 2; // Next player
+						$player_is_eligible = false;
+						break;
 					}
 				}
 
-				// Success, add the player (keep the key for later removal)
-				$players[$i] = $player;
-
-				// Do it all over again when the Team is ready
-				if (count($players) === Team::TEAM_SIZE)  {
-					$this->unmatched_teams[] = new Team(...$players);
-
-					// Remove the matched players from the pool of unmatched players
-					foreach ($players as $index => $player) {
-						unset($this->players[$index]); 
+				if ($player_is_eligible) {
+					// Success, add the player (keep the key for later removal)
+					$players[$i] = $player;
+	
+					// Do it all over again when the Team is ready
+					if (count($players) === Team::TEAM_SIZE)  {
+						$this->unmatched_teams[] = new Team(...$players);
+	
+						// Remove the matched players from the pool of unmatched players
+						foreach ($players as $index => $player) {
+							unset($this->players[$index]); 
+						}
+	
+						// Reset the array of Players
+						$players = [];
 					}
-
-					// Reset the array of Players
-					$players = [];
 				}
 			}
 		}
@@ -93,20 +97,25 @@ class Queue
 	public function tryToFormMatches(MatchCriterion ...$criteria) : void {
 		foreach ($this->unmatched_teams as $i => $team) {
 			foreach ($this->unmatched_teams as $j => $other_team) {
-				if ($team !== $other_team) {
+				// if ($team !== $other_team) {
+				if ($i !== $j) {
+					$teams_can_be_matched = true;
 					// Do any of the criteria disqualify matchmaking here?
 					foreach ($criteria as $criterion) {
 						if (!$criterion->canBeMatched($team, $other_team)) {
-							continue 3;
+							$teams_can_be_matched = false;
+							break;
 						}
 					}
 
-					// All good, put them in a match
-					$this->matches[] = [$team, $other_team];
-					
-					// remove them from the pool of unmatched teams
-					unset($this->unmatched_teams[$i]);
-					unset($this->unmatched_teams[$j]);
+					if ($teams_can_be_matched) {
+						// All good, put them in a match
+						$this->matches[] = [$team, $other_team];
+						
+						// remove them from the pool of unmatched teams
+						unset($this->unmatched_teams[$i]);
+						unset($this->unmatched_teams[$j]);
+					}
 				}
 			}
 		}

@@ -35,4 +35,5 @@ class TeamTest extends TestCase
 	private function createTeam(array $players) : Team {
 		return new Team(...$players);
 	}
+
 }

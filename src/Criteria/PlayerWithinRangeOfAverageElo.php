@@ -5,7 +5,13 @@ namespace LQ\Criteria;
 use LQ\Player;
 use LQ\TeamCriterion;
 
-class PlayerWithinEloRange implements TeamCriterion
+/**
+ * Checks that the player is within a certain range of the team's current
+ * average elo. Note that this does not make it impossible to have a team with a 
+ * greater than N range of elos, where N is the range from the team's average
+ * elo when checking a prospective player.
+ */
+class PlayerWithinRangeOfAverageElo implements TeamCriterion
 {
 	private $elo_range;
 
