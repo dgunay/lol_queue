@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 use PHPUnit\Framework\TestCase;
 
 use LQ\Queue;
@@ -63,4 +64,33 @@ class QueueTest extends TestCase
 	private function createTeam(array $players) : Team {
 		return new Team(...$players);
 	}
+=======
+
+namespace LOLQueue\Test;
+
+use LOLQueue\Queue;
+use LOLQueue\Player;
+use LOLQueue\Roles;
+use PHPUnit\Framework\TestCase;
+
+class QueueTest extends TestCase
+{
+  protected $queue;
+
+  public function setUp() {
+    $this->queue = new Queue();
+
+    for ($i = 0 ; $i < 10000 ; $i++) {
+      $roles = array_rand(Roles::ALL_ROLES, 2);
+      $p = new Player($roles[0], $roles[1]);
+    }
+  }
+
+  public function testGenerateTeam()
+  {
+    // grab a Team from the queue
+    print_r($this->queue);
+    // does it fill all the roles?
+  }
+>>>>>>> 6ee0c7afb91e063cca3bd63ccf8e1e6de632dcd9
 }

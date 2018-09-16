@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php declare(strict_types=1);
 
 namespace LQ;
@@ -123,4 +124,27 @@ class Queue
 
 	public function getMatches() : array { return $this->matches; }
 	public function getTeams() : array { return $this->unmatched_teams; }
+=======
+<?php
+
+namespace LOLQueue;
+
+use LOLQueue\Player;
+
+// TODO: implement a Queue that aggregates players
+
+class Queue {
+  private $queue;
+
+  public function add(Player $player) {
+    $this->queue[] = $player;
+  }
+
+  public function makeTeam() : array {
+    // TODO: interface this so that different strategies/backends can be used
+    foreach ($queue as $player) {
+      
+    }
+  }
+>>>>>>> 6ee0c7afb91e063cca3bd63ccf8e1e6de632dcd9
 }
