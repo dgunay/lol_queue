@@ -4,7 +4,7 @@ namespace LQ;
 
 use LQ\Team;
 
-abstract class MatchCriteria
+interface MatchCriterion
 {
 	/**
 	 * Implement this method to provide a criteria by which two teams can be
@@ -15,5 +15,5 @@ abstract class MatchCriteria
 	 * @param Team $b
 	 * @return boolean
 	 */
-	public static abstract function canBeMatched(Team $a, Team $b) : bool;
+	function canBeMatched(Team $a, Team $b) : bool;
 }
